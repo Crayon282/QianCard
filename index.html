@@ -1,41 +1,829 @@
 diff --git a/index.html b/index.html
-index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b648a4d7e 100644
+index c8029401212b530895e127be58622e0995f545a2..89b1a234e449f16cbf47a12d8ba902be93fd44fe 100644
 --- a/index.html
 +++ b/index.html
-@@ -1,103 +1,208 @@
- <!DOCTYPE html>
- <html lang="zh-CN">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-     <title>冯钰茜的VIP会员卡</title>
-     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
-     <link rel="icon" type="image/png" href="https://i.imgur.com/OleuXpc.jpeg">
-     <style>
-         html, body { scroll-behavior: smooth; }
--        body {
--            font-family: 'Noto Sans SC', Arial, sans-serif;
--            display: flex;
--            justify-content: center;
--            align-items: flex-start;
+@@ -1,795 +1,955 @@
+-diff --git a/index.html b/index.html
+-index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b648a4d7e 100644
+---- a/index.html
+-+++ b/index.html
+-@@ -1,103 +1,208 @@
+- <!DOCTYPE html>
+- <html lang="zh-CN">
+- <head>
+-     <meta charset="UTF-8">
+-     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+-     <title>冯钰茜的VIP会员卡</title>
+-     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+-     <link rel="icon" type="image/png" href="https://i.imgur.com/OleuXpc.jpeg">
+-     <style>
+-         html, body { scroll-behavior: smooth; }
+--        body {
+--            font-family: 'Noto Sans SC', Arial, sans-serif;
+--            display: flex;
+--            justify-content: center;
+--            align-items: flex-start;
+-+        body {
+-+            font-family: 'Noto Sans SC', Arial, sans-serif;
+-+            display: flex;
+-+            justify-content: center;
+-+            align-items: flex-start;
+-             min-height: 100vh;
+-             background: linear-gradient(rgba(248, 225, 231, 0.8), rgba(248, 225, 231, 0.8)), url('https://i.imgur.com/FNv7b40.jpeg') no-repeat center center;
+-             background-size: contain;
+-             background-color: #f8e1e7;
+-             margin: 0;
+-             perspective: 1000px;
+-             flex-direction: column;
+-             transition: all 0.5s ease;
+-             padding-top: 280px;
+-             -webkit-user-select: none;
+-             user-select: none;
+--            position: relative;
+--        }
+-+            position: relative;
+-+        }
+-+
+-+        .open-website-link {
+-+            position: fixed;
+-+            top: 16px;
+-+            right: 16px;
+-+            z-index: 150;
+-+            padding: 10px 18px;
+-+            border-radius: 999px;
+-+            background: rgba(255, 255, 255, 0.85);
+-+            color: #e60073;
+-+            font-weight: 700;
+-+            text-decoration: none;
+-+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+-+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+-+        }
+-+
+-+        .open-website-hint {
+-+            position: fixed;
+-+            top: 76px;
+-+            right: 16px;
+-+            width: min(320px, calc(100% - 32px));
+-+            padding: 14px 16px;
+-+            background: rgba(255, 255, 255, 0.9);
+-+            border-radius: 16px;
+-+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+-+            backdrop-filter: blur(6px);
+-+            color: #222;
+-+            font-size: 14px;
+-+            line-height: 1.5;
+-+            z-index: 120;
+-+        }
+-+
+-+        .open-website-hint ol {
+-+            padding-left: 18px;
+-+            margin: 6px 0 10px;
+-+        }
+-+
+-+        .open-website-hint li {
+-+            margin-bottom: 4px;
+-+        }
+-+
+-+        .copy-link-btn {
+-+            display: inline-flex;
+-+            align-items: center;
+-+            gap: 6px;
+-+            border: none;
+-+            border-radius: 999px;
+-+            padding: 6px 14px;
+-+            background: linear-gradient(135deg, #ff4f81, #40E0D0);
+-+            color: #fff;
+-+            font-weight: 600;
+-+            cursor: pointer;
+-+            box-shadow: 0 6px 14px rgba(255, 79, 129, 0.3);
+-+        }
+-+
+-+        .copy-link-btn:active {
+-+            transform: translateY(1px);
+-+        }
+-+
+-+        .copy-toast {
+-+            display: inline-block;
+-+            margin-left: 8px;
+-+            font-size: 13px;
+-+            color: #28a745;
+-+            opacity: 0;
+-+            transition: opacity 0.3s ease;
+-+        }
+-+
+-+        .copy-toast.visible {
+-+            opacity: 1;
+-+        }
+-+
+-+        body.dark-mode .open-website-link {
+-+            background: rgba(17, 17, 17, 0.85);
+-+            color: #40E0D0;
+-+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+-+        }
+-+
+-+        body.dark-mode .open-website-hint {
+-+            background: rgba(34, 34, 34, 0.9);
+-+            color: #f5f5f5;
+-+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+-+        }
+-+
+-+        body.dark-mode .copy-link-btn {
+-+            box-shadow: 0 6px 14px rgba(64, 224, 208, 0.35);
+-+        }
+-+
+-+        .open-website-link:hover,
+-+        .open-website-link:focus-visible,
+-+        .copy-link-btn:focus-visible {
+-+            transform: translateY(-2px);
+-+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+-+            outline: none;
+-+        }
+- 
+-         body.dark-mode {
+-             background: linear-gradient(rgba(51, 51, 51, 0.9), rgba(51, 51, 51, 0.9)), url('https://i.imgur.com/QhzgmZT.jpeg') no-repeat center center;
+-             background-size: contain;
+-             background-color: #333;
+-             color: #fff;
+-             overflow: hidden;
+-         }
+- 
+-         body.dark-mode::before {
+-             content: '';
+-             position: absolute;
+-             top: 0;
+-             left: 0;
+-             width: 100%;
+-             height: 100%;
+-             pointer-events: none;
+-             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.7"/></svg>') repeat;
+-             animation: twinkle 4s infinite;
+-             z-index: 0;
+-         }
+-         @keyframes twinkle {
+-             0%, 100% { opacity: 0.3; }
+-             50% { opacity: 0.7; }
+-         }
+-         .star {
+-             position: absolute;
+-             width: 2px;
+-             height: 2px;
+-             background: #fff;
+-             border-radius: 50%;
+-             animation: sparkle 3s infinite;
+-             z-index: 1;
+-         }
+-         @keyframes sparkle {
+-             0%, 100% { opacity: 0; }
+-             50% { opacity: 1; }
+-         }
+- 
+--        @media (max-width: 390px) {
+--            body {
+--                background-size: auto 80%;
+--                background-position: center top;
+--                padding-top: 230px;
+--            }
+--            body.dark-mode {
+--                background-size: auto 80%;
+--                background-position: center top;
+--            }
+--        }
+-+        @media (max-width: 390px) {
+-+            body {
+-+                background-size: auto 80%;
+-+                background-position: center top;
+-+                padding-top: 230px;
+-+            }
+-+            body.dark-mode {
+-+                background-size: auto 80%;
+-+                background-position: center top;
+-+            }
+-+            .open-website-link {
+-+                position: static;
+-+                display: inline-flex;
+-+                margin: 12px auto 0;
+-+            }
+-+            .open-website-hint {
+-+                position: static;
+-+                margin: 12px auto 0;
+-+                width: calc(100% - 32px);
+-+            }
+-+        }
+- 
+-         .card-container {
+-             position: fixed;
+-             top: 50px;
+-             left: 50%;
+-             transform: translateX(-50%);
+-             width: 360px;
+-             height: 220px;
+-             transform-style: preserve-3d;
+-             z-index: 100;
+-             cursor: pointer;
+-             transition: transform 0.6s ease;
+-             -webkit-transform: translateX(-50%);
+-         }
+- 
+-         .card-container.flipped {
+-             transform: translateX(-50%) rotateY(180deg);
+-             -webkit-transform: translateX(-50%) rotateY(180deg);
+-         }
+- 
+-         .card {
+-             position: absolute;
+-             width: 100%;
+-             height: 100%;
+-             backface-visibility: hidden;
+-@@ -376,52 +481,106 @@
+-             width: 140px; 
+-             text-align: center;
+-         }
+- 
+-         .custom-reward {
+-             margin-top: 5px;
+-         }
+- 
+-         .history {
+-             margin-top: 10px;
+-             max-height: 120px;
+-             overflow-y: auto;
+-             font-size: 14px;
+-             color: #333;
+-         }
+-         .history ul {
+-             list-style: none;
+-             padding: 0;
+-         }
+-         .history li {
+-             padding: 3px 0;
+-         }
+-         .history li.add { color: #28a745; }
+-         .history li.subtract { color: #dc3545; }
+-         .history li.redeem { color: #007bff; }
+--        .history li.daily { color: #17a2b8; }
+--        .history li.latest { font-weight: 700; }
+-+        .history li.daily { color: #17a2b8; }
+-+        .history li.latest { font-weight: 700; }
+-+
+-+        .job-agent {
+-+            display: flex;
+-+            flex-direction: column;
+-+            gap: 10px;
+-+            color: #333;
+-+        }
+-+        .job-agent small {
+-+            color: #777;
+-+        }
+-+        .job-agent-grid {
+-+            display: grid;
+-+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+-+            gap: 10px;
+-+        }
+-+        .job-agent label {
+-+            font-weight: 600;
+-+            display: flex;
+-+            flex-direction: column;
+-+            font-size: 14px;
+-+        }
+-+        .job-agent input[type="text"],
+-+        .job-agent textarea,
+-+        .job-agent select {
+-+            width: 100%;
+-+            padding: 10px 12px;
+-+            border: 2px solid #ff4f81;
+-+            border-radius: 15px;
+-+            background: #fff;
+-+            color: #333;
+-+            font-size: 14px;
+-+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+-+        }
+-+        .job-agent textarea {
+-+            min-height: 80px;
+-+            resize: vertical;
+-+        }
+-+        #jobReply {
+-+            min-height: 180px;
+-+            font-family: 'Noto Sans SC', Arial, sans-serif;
+-+            font-size: 14px;
+-+            white-space: pre-line;
+-+        }
+-+        .dark-mode .job-agent {
+-+            color: #fff;
+-+        }
+-+        .dark-mode .job-agent input[type="text"],
+-+        .dark-mode .job-agent textarea,
+-+        .dark-mode .job-agent select {
+-+            background: #444;
+-+            color: #fff;
+-+            border-color: #777;
+-+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+-+        }
+- 
+-         #darkModeToggle, #audioToggle {
+-             position: fixed;
+-             top: 10px;
+-             padding: 6px 12px;
+-             border-radius: 15px;
+-             font-size: 12px;
+-             z-index: 101;
+-         }
+-         #darkModeToggle { right: 10px; }
+-         #audioToggle { right: 80px; }
+-         #chatBubble {
+-             position: fixed;
+-             width: 50px;
+-             height: 50px;
+-             background-color: #ff4f81;
+-             border-radius: 25px;
+-             display: flex;
+-             align-items: center;
+-             justify-content: center;
+-             cursor: pointer;
+-             z-index: 200;
+-             color: #fff;
+-             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+-             -webkit-tap-highlight-color: transparent;
+-@@ -792,54 +951,68 @@
+-             .expiry { font-size: 14px; }
+-             .qr-code { width: 100px; top: 60px; }
+-             .back-content { margin-top: 70px; font-size: 14px; }
+-             .back-header { font-size: 18px; }
+-             .btn, select, input[type="number"], input[type="text"] {
+-                 padding: 6px 12px;
+-                 font-size: 12px;
+-             }
+-             select, input[type="number"], input[type="text"] { width: 120px; }
+-             .history { max-height: 100px; font-size: 13px; }
+-             #darkModeToggle, #audioToggle { font-size: 10px; padding: 5px 10px; }
+-             #audioToggle { right: 60px; }
+-             .collapsible { width: 95%; padding: 5px; }
+-             #diaryEntry { height: 80px; }
+-             #diaryList { max-height: 150px; }
+-             #chatBubble { width: 40px; height: 40px; }
+-             #chatBubble::after { font-size: 20px; }
+-             .chat-container { width: 280px; max-height: 350px; }
+-             #chatMessages { max-height: 250px; }
+-             #chatInput { min-width: 120px; }
+-             #chatInputArea button { padding: 3px 8px; min-width: 35px; }
+-             #playlist { max-height: 120px; }
+-         }
+-     </style>
+- </head>
+--<body>
+--    <div id="loadingScreen">
+--        <div class="spinner"></div>
+--    </div>
+-+<body>
+-+    <a class="open-website-link" href="https://vip-membership-b19fe.web.app/" target="_blank" rel="noopener">
+-+        🚀 打开网站 (vip-membership-b19fe.web.app)
+-+    </a>
+-+    <section class="open-website-hint" aria-live="polite">
+-+        <p>🧭 想体验完整版？按照以下任意方式即可：</p>
+-+        <ol>
+-+            <li>直接点击右上角「打开网站」，新页面会在新标签页加载。</li>
+-+            <li>如果浏览器拦截了弹窗，复制网址后手动在地址栏粘贴进入。</li>
+-+        </ol>
+-+        <button type="button" class="copy-link-btn" onclick="copyLiveSiteUrl()">
+-+            📋 复制网址
+-+        </button>
+-+        <span id="copyLinkToast" class="copy-toast" role="status" aria-live="assertive"></span>
+-+    </section>
+-+    <div id="loadingScreen">
+-+        <div class="spinner"></div>
+-+    </div>
+-     <button id="darkModeToggle" class="btn" onclick="toggleDarkMode()">切换黑暗模式</button>
+-     <button id="audioToggle" class="btn" onclick="toggleAudio()">音乐开关</button>
+-     <audio id="backgroundMusic" loop>
+-         <source src="https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" type="audio/mpeg">
+-         Your browser does not support the audio element.
+-     </audio>
+-     <div class="card-container" onclick="flipCard()">
+-         <div class="card front">
+-             <div class="bank-name">心动银行</div>
+-             <img class="logo" loading="lazy" src="https://i.imgur.com/OleuXpc.jpeg" alt="Logo">
+-             <img class="chip" loading="lazy" src="https://i.imgur.com/I836XHp.png" alt="Chip">
+-             <div class="card-details">
+-                 <p class="card-number">5201 8888 1314 9999</p>
+-                 <p class="expiry">有效期至: <strong>12/2099</strong></p>
+-                 <p class="card-holder"><strong>冯钰茜</strong></p>
+-             </div>
+-         </div>
+-         <div class="card back">
+-             <img class="magnetic-stripe" loading="lazy" src="https://i.imgur.com/8ZLLYBn.jpeg" alt="Magnetic Stripe">
+-             <img class="qr-code" loading="lazy" src="https://i.imgur.com/3ojYXPE.png" alt="QR Code">
+-             <div class="back-content">
+-                 <div class="back-header">心动银行 黑金卡</div>
+-                 <p>专属权益与服务<br>终身有效<br>全球无忧服务<br>联系客服：85000272</p>
+-             </div>
+-         </div>
+-@@ -859,101 +1032,193 @@
+-                 <input type="number" id="newRewardCost" min="1" placeholder="积分">
+-                 <button class="btn" onclick="addReward()">添加奖励</button>
+-             </div>
+-             <div class="history">
+-                 <h3>交易记录</h3>
+-                 <ul id="historyList"></ul>
+-                 <button class="btn" onclick="clearTransactionHistory()">清空交易记录</button>
+-             </div>
+-         </div>
+-     </div>
+- 
+-     <div class="collapsible">
+-         <h2 onclick="toggleSection(this)">我的日记</h2>
+-         <div class="content">
+-             <textarea id="diaryEntry" placeholder="记录今天的想法..."></textarea>
+-             <select id="diaryMood">
+-                 <option value="happy">😊 开心</option>
+-                 <option value="sad">😢 难过</option>
+-                 <option value="neutral">😐 平常</option>
+-             </select>
+-             <button class="btn" onclick="saveDiaryEntry()">保存</button>
+-             <div id="diaryList"></div>
+-         </div>
+-     </div>
+- 
+--    <div class="collapsible">
+--        <h2 onclick="toggleSection(this)">我的歌单</h2>
+--        <div class="content">
+--            <div id="playlist"></div>
+--        </div>
+--    </div>
+--
+--    <div id="chatBubble"></div>
+--    <div class="chat-container" id="chatContainer">
+-+    <div class="collapsible">
+-+        <h2 onclick="toggleSection(this)">我的歌单</h2>
+-+        <div class="content">
+-+            <div id="playlist"></div>
+-+        </div>
+-+    </div>
+-+
+-+    <div class="collapsible">
+-+        <h2 onclick="toggleSection(this)">新加坡求职代理</h2>
+-+        <div class="content job-agent">
+-+            <p>把你的职业设定交给这位迷你代理，她会用预设信息帮助你快速回应在新加坡的职位机会，并主动说明你是中国公民、需要雇主支持签证。</p>
+-+            <div class="job-agent-grid">
+-+                <label>姓名/署名
+-+                    <input type="text" id="agentName" value="冯钰茜">
+-+                </label>
+-+                <label>个人头衔
+-+                    <input type="text" id="agentTitle" value="数据驱动的产品运营经理">
+-+                </label>
+-+                <label>联系方式
+-+                    <input type="text" id="agentContact" value="+65 8888 0000 ｜ qian@example.com">
+-+                </label>
+-+                <label>常驻/目标地点
+-+                    <input type="text" id="agentLocation" value="新加坡">
+-+                </label>
+-+                <label>目标公司
+-+                    <input type="text" id="jobCompany" placeholder="如：Grab">
+-+                </label>
+-+                <label>职位名称
+-+                    <input type="text" id="jobTitle" placeholder="如：Product Manager">
+-+                </label>
+-+                <label>回复语气
+-+                    <select id="agentTone">
+-+                        <option value="application">首轮申请</option>
+-+                        <option value="followup">申请跟进</option>
+-+                        <option value="network">内推/人脉问候</option>
+-+                    </select>
+-+                </label>
+-+            </div>
+-+            <label>核心优势（保持你想要的 preset）
+-+                <textarea id="agentSummary">拥有6年支付与会员业务经验，专注商业化策略、增长实验和跨区域合作，能够在强监管环境中把想法落地。</textarea>
+-+            </label>
+-+            <label>代表成果/技能
+-+                <textarea id="agentHighlights">带领跨职能小组在6个月内把付费会员转化率提升31%
+-+推动营销自动化流水同比提升22%
+-+熟悉数据仪表盘、SQL、Looker 与用户调研</textarea>
+-+            </label>
+-+            <label>职位关键信息或招聘方的需求
+-+                <textarea id="jobDetails" placeholder="输入JD里你想回应的重点、工具或要求"></textarea>
+-+            </label>
+-+            <label>额外备注（如可入职时间、薪资期望）
+-+                <textarea id="agentExtras" placeholder="想额外告知招聘方的信息"></textarea>
+-+            </label>
+-+            <button class="btn" onclick="generateJobReply()">生成智能回复</button>
+-+            <label>代理生成的求职回复
+-+                <textarea id="jobReply" readonly placeholder="这里会出现完整的邮件/消息草稿"></textarea>
+-+            </label>
+-+            <small>提示：回复会自动提到你是中国公民、需要雇主支持新加坡工作签证（Employment Pass/S Pass）。</small>
+-+        </div>
+-+    </div>
+-+
+-+    <div id="chatBubble"></div>
+-+    <div class="chat-container" id="chatContainer">
+-         <div id="chatHeader">客服聊天 (拖动移动，点击收起)</div>
+-         <div id="typingIndicator"></div>
+-         <div id="chatMessages"></div>
+-         <div id="chatInputArea">
+-             <input type="text" id="chatInput" placeholder="输入消息...">
+-             <button class="btn" onclick="sendMessage()">发送</button>
+-             <button class="btn" id="voiceButton" onclick="startVoiceInput()">🎤</button>
+-             <button class="btn" onclick="clearChat()">🧹</button>
+-         </div>
+-     </div>
+- 
+-     <div id="spinner" class="spinner"></div>
+-     <footer>© 2025 心动银行 - 由 饶坚良 精心设计</footer>
+- 
+-     <script type="module">
+-         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+-         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, deleteDoc, getDocs, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+- 
+-         const firebaseConfig = {
+-             apiKey: "AIzaSyACDbq6EXRSNiNd8dGiPiTrt4mjpu5ri3w",
+-             authDomain: "vip-membership-b19fe.firebaseapp.com",
+-             projectId: "vip-membership-b19fe",
+-             storageBucket: "vip-membership-b19fe.appspot.com",
+-             messagingSenderId: "1098738124176",
+-             appId: "1:1098738124176:web:77ec1c338f627026729f15"
+-         };
+- 
+-         const app = initializeApp(firebaseConfig);
+-         const db = getFirestore(app);
+-         const userRef = doc(db, "users", "vip-user");
+-         const transactionsRef = collection(userRef, "transactions");
+-         const rewardsRef = collection(userRef, "rewards");
+-         const chatsRef = collection(userRef, "chats");
+-         const diaryRef = collection(userRef, "diary");
+- 
+--        let currentSender = "liang";
+--        let recorder = null;
+--        let isRecording = false;
+--        let currentAudio = null;
+--
+--        async function loadPoints() {
+--            const spinner = document.getElementById("spinner");
+-+        let currentSender = "liang";
+-+        let recorder = null;
+-+        let isRecording = false;
+-+        let currentAudio = null;
+-+        let copyToastTimer = null;
+-+
+-+        function copyLiveSiteUrl() {
+-+            const url = "https://vip-membership-b19fe.web.app/";
+-+            const fallbackCopy = () => {
+-+                const textarea = document.createElement("textarea");
+-+                textarea.value = url;
+-+                document.body.appendChild(textarea);
+-+                textarea.select();
+-+                try {
+-+                    document.execCommand("copy");
+-+                    showCopyToast("已复制，粘贴到浏览器地址栏即可！");
+-+                } catch (err) {
+-+                    showCopyToast("请手动复制：" + url);
+-+                }
+-+                document.body.removeChild(textarea);
+-+            };
+-+
+-+            if (navigator.clipboard && navigator.clipboard.writeText) {
+-+                navigator.clipboard.writeText(url)
+-+                    .then(() => showCopyToast("已复制，粘贴到浏览器地址栏即可！"))
+-+                    .catch(() => fallbackCopy());
+-+            } else {
+-+                fallbackCopy();
+-+            }
+-+        }
+-+
+-+        function showCopyToast(message) {
+-+            const toast = document.getElementById("copyLinkToast");
+-+            if (!toast) return;
+-+            toast.textContent = message;
+-+            toast.classList.add("visible");
+-+            if (copyToastTimer) {
+-+                clearTimeout(copyToastTimer);
+-+            }
+-+            copyToastTimer = setTimeout(() => {
+-+                toast.classList.remove("visible");
+-+            }, 2000);
+-+        }
+-+
+-+        async function loadPoints() {
+-+            const spinner = document.getElementById("spinner");
+-             spinner.style.display = "block";
+-             try {
+-                 const docSnap = await getDoc(userRef);
+-                 if (docSnap.exists()) {
+-                     const data = docSnap.data();
+-                     updatePointsDisplay(data.points || 0);
+-                     updateStreakDisplay(data.streak || 0, data.lastCheckIn);
+-                 } else {
+-                     await setDoc(userRef, { points: 0, streak: 0, lastCheckIn: null });
+-                     updatePointsDisplay(0);
+-                     updateStreakDisplay(0, null);
+-                 }
+-                 loadHistory();
+-                 loadRewards();
+-                 startCountdown();
+-                 loadPlaylist();
+-             } catch (error) {
+-                 console.error("加载积分失败:", error);
+-             }
+-             spinner.style.display = "none";
+-         }
+- 
+-         async function adjustPoints() {
+-             const spinner = document.getElementById("spinner");
+-             spinner.style.display = "block";
+-@@ -1477,54 +1742,127 @@
+-             const playlist = document.getElementById("playlist");
+-             const songs = [
+-                 { name: "Flower Dance", url: "https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" },
+-                 { name: "Need You Now", url: "https://www.dropbox.com/scl/fi/l08rq49ao7y8siv5vwa02/Lady-Antebellum-Need-You-Now.mp3?rlkey=1y7sbd3druy1g0mrafuwz1xof&st=d3f7r56a&raw=1" },
+-                 { name: "Close to You", url: "https://www.dropbox.com/scl/fi/wy4v3cn11uwseh14hyb9a/Carpenters_They_Long_To_Be_Close_To_You.mp3?rlkey=oxh880tv5shrp6jygagxvw3t3&st=ocdxuzwc&raw=1" }
+-             ];
+- 
+-             playlist.innerHTML = "";
+-             songs.forEach((song, index) => {
+-                 const div = document.createElement("div");
+-                 const audio = document.createElement("audio");
+-                 audio.controls = true;
+-                 audio.src = song.url;
+-                 audio.addEventListener("play", () => {
+-                     if (currentAudio && currentAudio !== audio) {
+-                         currentAudio.pause();
+-                     }
+-                     currentAudio = audio;
+-                 });
+-                 div.textContent = `${index + 1}. ${song.name} `;
+-                 div.appendChild(audio);
+-                 playlist.appendChild(div);
+-             });
+-         }
+- 
+--        function toggleSection(header) {
+--            const content = header.nextElementSibling;
+--            content.classList.toggle("active");
+--        }
+-+        function toggleSection(header) {
+-+            const content = header.nextElementSibling;
+-+            content.classList.toggle("active");
+-+        }
+-+
+-+        function parseHighlights(text) {
+-+            return text
+-+                .split(/[\n,，、]/)
+-+                .map(item => item.trim())
+-+                .filter(Boolean);
+-+        }
+-+
+-+        function generateJobReply() {
+-+            const spinner = document.getElementById("spinner");
+-+            spinner.style.display = "block";
+-+
+-+            const getValue = (id, fallback = "") => {
+-+                const el = document.getElementById(id);
+-+                return (el ? el.value.trim() : "") || fallback;
+-+            };
+-+
+-+            const name = getValue("agentName", "冯钰茜");
+-+            const title = getValue("agentTitle", "产品运营经理");
+-+            const contact = getValue("agentContact");
+-+            const location = getValue("agentLocation", "新加坡");
+-+            const summary = getValue("agentSummary", "热爱构建以用户为中心的产品体验。");
+-+            const highlights = parseHighlights(getValue("agentHighlights"));
+-+            const jobCompany = getValue("jobCompany");
+-+            const jobTitle = getValue("jobTitle");
+-+            const jobDetails = getValue("jobDetails");
+-+            const extras = getValue("agentExtras");
+-+            const toneKey = getValue("agentTone", "application");
+-+
+-+            const toneProfiles = {
+-+                application: {
+-+                    greeting: "你好{{team}}：",
+-+                    focus: "感谢你们发布{{jobLine}}的机会。",
+-+                    callToAction: "若方便的话，期待约一个时间，讨论我可以如何帮助团队在新加坡市场落地成果。",
+-+                    closing: "祝一切顺利，期待回复。"
+-+                },
+-+                followup: {
+-+                    greeting: "您好{{team}}：",
+-+                    focus: "我想跟进之前提交的{{jobLine}}申请，同时补充一些我能够即刻贡献的想法。",
+-+                    callToAction: "如需额外材料或案例，请告诉我，我会立刻补充。",
+-+                    closing: "感谢抽空阅读。"
+-+                },
+-+                network: {
+-+                    greeting: "嗨{{team}}：",
+-+                    focus: "我想了解贵司目前关于{{jobLine}}的招聘重点，并看看是否有合作或内推的可能。",
+-+                    callToAction: "若团队合适，还请指点下一步或推荐可以沟通的同事。",
+-+                    closing: "再次感谢，也祝工作顺利！"
+-+                }
+-+            };
+-+
+-+            const toneProfile = toneProfiles[toneKey] || toneProfiles.application;
+-+            const teamLabel = jobCompany ? `${jobCompany}团队` : "招聘团队";
+-+            const jobLine = jobTitle ? `${jobTitle} 岗位` : "的岗位机会";
+-+            const companyLabel = jobCompany || "贵公司";
+-+            const greeting = toneProfile.greeting.replace("{{team}}", teamLabel);
+-+            const focusLine = toneProfile.focus.replace("{{jobLine}}", jobLine);
+-+            const detailsLine = jobDetails ? `我特别关注到：${jobDetails}。` : "";
+-+            const introParts = [`我是${name}`];
+-+            if (title) introParts.push(`一名${title}`);
+-+            if (location) introParts.push(`目前常驻${location}`);
+-+            const intro = `${introParts.join("，")}。${summary}`;
+-+            const highlightText = highlights.length ? `\n核心亮点：\n${highlights.map(item => `• ${item}`).join("\n")}` : "";
+-+            const extrasText = extras ? `\n额外备注：${extras}` : "";
+-+            const contactLine = contact ? `可通过 ${contact} 联系我。` : "可以随时与我联系。";
+-+            const visaLine = "作为中国公民，我清楚需要雇主支持办理新加坡 Employment Pass 或 S Pass，所有材料已准备好并可积极配合。";
+-+
+-+            const body = `${focusLine} ${detailsLine}我相信这些经验能够帮助${companyLabel}在新加坡市场更快兑现目标。`;
+-+            const message = `${greeting}\n\n${intro}\n${body}${highlightText}\n${visaLine}${extrasText}\n\n${toneProfile.callToAction}\n${contactLine}\n${toneProfile.closing}\n${name}`;
+-+
+-+            const replyBox = document.getElementById("jobReply");
+-+            replyBox.value = message.trim();
+-+            spinner.style.display = "none";
+-+        }
+- 
+-         document.addEventListener("DOMContentLoaded", () => {
+-             const chatBubble = document.getElementById("chatBubble");
+-             const chatContainer = document.getElementById("chatContainer");
+-             currentX = window.innerWidth - 70;
+-             currentY = window.innerHeight - 70;
+-             chatBubble.style.left = `${currentX}px`;
+-             chatBubble.style.top = `${currentY}px`;
+-             chatContainer.style.left = `${currentX}px`;
+-             chatContainer.style.top = `${currentY + 60}px`;
+- 
+-             chatBubble.addEventListener("mousedown", startDragging);
+-             chatContainer.addEventListener("mousedown", startDragging);
+-             document.addEventListener("mousemove", drag);
+-             document.addEventListener("mouseup", stopDragging);
+-             chatBubble.addEventListener("touchstart", startDragging);
+-             chatContainer.addEventListener("touchstart", startDragging);
+-             document.addEventListener("touchmove", drag);
+-             document.addEventListener("touchend", stopDragging);
+-             chatBubble.addEventListener("click", (e) => { if (!isDragging) toggleChat(); });
+- 
+-             document.getElementById("audioToggle").textContent = "开启音乐";
+-             if (localStorage.getItem("darkMode") === "true") {
+-                 document.body.classList.add("dark-mode");
+-                 addStars();
+-@@ -1535,31 +1873,32 @@
+- 
+-             const loadingScreen = document.getElementById("loadingScreen");
+-             setTimeout(() => {
+-                 loadingScreen.classList.add("fade-out");
+-                 setTimeout(() => loadingScreen.style.display = "none", 500);
+-             }, 1000);
+-         });
+- 
+-         document.getElementById("chatInput").addEventListener("keypress", (e) => {
+-             if (e.key === "Enter") sendMessage();
+-         });
+- 
+-         window.adjustPoints = adjustPoints;
+-         window.redeemSpecificReward = redeemSpecificReward;
+-         window.addReward = addReward;
+-         window.deleteReward = deleteReward;
+-         window.sendMessage = sendMessage;
+-         window.clearChat = clearChat;
+-         window.startVoiceInput = startVoiceInput;
+-         window.toggleChat = toggleChat;
+-         window.toggleDarkMode = toggleDarkMode;
+-         window.flipCard = flipCard;
+-         window.toggleAudio = toggleAudio;
+-         window.clearTransactionHistory = clearTransactionHistory;
+-         window.saveDiaryEntry = saveDiaryEntry;
+--        window.deleteDiaryEntry = deleteDiaryEntry;
+--        window.dailyCheckIn = dailyCheckIn;
+--        window.toggleSection = toggleSection;
+--    </script>
+--</body>
+--</html>
+-\ No newline at end of file
+-+        window.deleteDiaryEntry = deleteDiaryEntry;
+-+        window.dailyCheckIn = dailyCheckIn;
+-+        window.toggleSection = toggleSection;
+-+        window.generateJobReply = generateJobReply;
+-+    </script>
+-+</body>
+-+</html>
++ <!DOCTYPE html>
++ <html lang="zh-CN">
++ <head>
++     <meta charset="UTF-8">
++     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
++     <title>冯钰茜的VIP会员卡</title>
++     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
++     <link rel="icon" type="image/png" href="https://i.imgur.com/OleuXpc.jpeg">
++     <style>
++         html, body { scroll-behavior: smooth; }
 +        body {
 +            font-family: 'Noto Sans SC', Arial, sans-serif;
 +            display: flex;
 +            justify-content: center;
 +            align-items: flex-start;
-             min-height: 100vh;
-             background: linear-gradient(rgba(248, 225, 231, 0.8), rgba(248, 225, 231, 0.8)), url('https://i.imgur.com/FNv7b40.jpeg') no-repeat center center;
-             background-size: contain;
-             background-color: #f8e1e7;
-             margin: 0;
-             perspective: 1000px;
-             flex-direction: column;
-             transition: all 0.5s ease;
-             padding-top: 280px;
-             -webkit-user-select: none;
-             user-select: none;
--            position: relative;
--        }
++             min-height: 100vh;
++             background: linear-gradient(rgba(248, 225, 231, 0.8), rgba(248, 225, 231, 0.8)), url('https://i.imgur.com/FNv7b40.jpeg') no-repeat center center;
++             background-size: contain;
++             background-color: #f8e1e7;
++             margin: 0;
++             perspective: 1000px;
++             flex-direction: column;
++             transition: all 0.5s ease;
++             padding-top: 280px;
++             -webkit-user-select: none;
++             user-select: none;
 +            position: relative;
 +        }
 +
@@ -133,56 +921,45 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
 +            outline: none;
 +        }
- 
-         body.dark-mode {
-             background: linear-gradient(rgba(51, 51, 51, 0.9), rgba(51, 51, 51, 0.9)), url('https://i.imgur.com/QhzgmZT.jpeg') no-repeat center center;
-             background-size: contain;
-             background-color: #333;
-             color: #fff;
-             overflow: hidden;
-         }
- 
-         body.dark-mode::before {
-             content: '';
-             position: absolute;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             pointer-events: none;
-             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.7"/></svg>') repeat;
-             animation: twinkle 4s infinite;
-             z-index: 0;
-         }
-         @keyframes twinkle {
-             0%, 100% { opacity: 0.3; }
-             50% { opacity: 0.7; }
-         }
-         .star {
-             position: absolute;
-             width: 2px;
-             height: 2px;
-             background: #fff;
-             border-radius: 50%;
-             animation: sparkle 3s infinite;
-             z-index: 1;
-         }
-         @keyframes sparkle {
-             0%, 100% { opacity: 0; }
-             50% { opacity: 1; }
-         }
- 
--        @media (max-width: 390px) {
--            body {
--                background-size: auto 80%;
--                background-position: center top;
--                padding-top: 230px;
--            }
--            body.dark-mode {
--                background-size: auto 80%;
--                background-position: center top;
--            }
--        }
++ 
++         body.dark-mode {
++             background: linear-gradient(rgba(51, 51, 51, 0.9), rgba(51, 51, 51, 0.9)), url('https://i.imgur.com/QhzgmZT.jpeg') no-repeat center center;
++             background-size: contain;
++             background-color: #333;
++             color: #fff;
++             overflow: hidden;
++         }
++ 
++         body.dark-mode::before {
++             content: '';
++             position: absolute;
++             top: 0;
++             left: 0;
++             width: 100%;
++             height: 100%;
++             pointer-events: none;
++             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.7"/></svg>') repeat;
++             animation: twinkle 4s infinite;
++             z-index: 0;
++         }
++         @keyframes twinkle {
++             0%, 100% { opacity: 0.3; }
++             50% { opacity: 0.7; }
++         }
++         .star {
++             position: absolute;
++             width: 2px;
++             height: 2px;
++             background: #fff;
++             border-radius: 50%;
++             animation: sparkle 3s infinite;
++             z-index: 1;
++         }
++         @keyframes sparkle {
++             0%, 100% { opacity: 0; }
++             50% { opacity: 1; }
++         }
++ 
 +        @media (max-width: 390px) {
 +            body {
 +                background-size: auto 80%;
@@ -204,85 +981,89 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +                width: calc(100% - 32px);
 +            }
 +        }
- 
-         .card-container {
-             position: fixed;
-             top: 50px;
-             left: 50%;
-             transform: translateX(-50%);
-             width: 360px;
-             height: 220px;
-             transform-style: preserve-3d;
-             z-index: 100;
-             cursor: pointer;
-             transition: transform 0.6s ease;
-             -webkit-transform: translateX(-50%);
-         }
- 
-         .card-container.flipped {
-             transform: translateX(-50%) rotateY(180deg);
-             -webkit-transform: translateX(-50%) rotateY(180deg);
-         }
- 
-         .card {
-             position: absolute;
-             width: 100%;
-             height: 100%;
-             backface-visibility: hidden;
-@@ -376,52 +481,106 @@
-             width: 140px; 
-             text-align: center;
-         }
- 
-         .custom-reward {
-             margin-top: 5px;
-         }
- 
-         .history {
-             margin-top: 10px;
-             max-height: 120px;
-             overflow-y: auto;
-             font-size: 14px;
-             color: #333;
-         }
-         .history ul {
-             list-style: none;
-             padding: 0;
-         }
-         .history li {
-             padding: 3px 0;
-         }
-         .history li.add { color: #28a745; }
-         .history li.subtract { color: #dc3545; }
-         .history li.redeem { color: #007bff; }
--        .history li.daily { color: #17a2b8; }
--        .history li.latest { font-weight: 700; }
++ 
++         .card-container {
++             position: fixed;
++             top: 50px;
++             left: 50%;
++             transform: translateX(-50%);
++             width: 360px;
++             height: 220px;
++             transform-style: preserve-3d;
++             z-index: 100;
++             cursor: pointer;
++             transition: transform 0.6s ease;
++             -webkit-transform: translateX(-50%);
++         }
++ 
++         .card-container.flipped {
++             transform: translateX(-50%) rotateY(180deg);
++             -webkit-transform: translateX(-50%) rotateY(180deg);
++         }
++ 
++         .card {
++             position: absolute;
++             width: 100%;
++             height: 100%;
++             backface-visibility: hidden;
++             width: 140px; 
++             text-align: center;
++         }
++ 
++         .custom-reward {
++             margin-top: 5px;
++         }
++ 
++         .history {
++             margin-top: 10px;
++             max-height: 120px;
++             overflow-y: auto;
++             font-size: 14px;
++             color: #333;
++         }
++         .history ul {
++             list-style: none;
++             padding: 0;
++         }
++         .history li {
++             padding: 3px 0;
++         }
++         .history li.add { color: #28a745; }
++         .history li.subtract { color: #dc3545; }
++         .history li.redeem { color: #007bff; }
 +        .history li.daily { color: #17a2b8; }
 +        .history li.latest { font-weight: 700; }
 +
-+        .job-agent {
++        .job-agent,
++        .honor-coach {
 +            display: flex;
 +            flex-direction: column;
 +            gap: 10px;
 +            color: #333;
 +        }
-+        .job-agent small {
++        .job-agent small,
++        .honor-coach small {
 +            color: #777;
 +        }
-+        .job-agent-grid {
++        .job-agent-grid,
++        .honor-coach-grid {
 +            display: grid;
 +            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 +            gap: 10px;
 +        }
-+        .job-agent label {
++        .job-agent label,
++        .honor-coach label {
 +            font-weight: 600;
 +            display: flex;
 +            flex-direction: column;
 +            font-size: 14px;
 +        }
 +        .job-agent input[type="text"],
++        .honor-coach input[type="text"],
 +        .job-agent textarea,
-+        .job-agent select {
++        .honor-coach textarea,
++        .job-agent select,
++        .honor-coach select {
 +            width: 100%;
 +            padding: 10px 12px;
 +            border: 2px solid #ff4f81;
@@ -292,7 +1073,8 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +            font-size: 14px;
 +            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 +        }
-+        .job-agent textarea {
++        .job-agent textarea,
++        .honor-coach textarea {
 +            min-height: 80px;
 +            resize: vertical;
 +        }
@@ -302,72 +1084,83 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +            font-size: 14px;
 +            white-space: pre-line;
 +        }
-+        .dark-mode .job-agent {
++        #honorCoachOutput {
++            min-height: 160px;
++            border-radius: 18px;
++            border: 2px dashed rgba(255, 79, 129, 0.5);
++            padding: 16px;
++            background: rgba(255, 255, 255, 0.7);
++            line-height: 1.6;
++        }
++        .dark-mode .job-agent,
++        .dark-mode .honor-coach {
 +            color: #fff;
 +        }
 +        .dark-mode .job-agent input[type="text"],
++        .dark-mode .honor-coach input[type="text"],
 +        .dark-mode .job-agent textarea,
-+        .dark-mode .job-agent select {
++        .dark-mode .honor-coach textarea,
++        .dark-mode .job-agent select,
++        .dark-mode .honor-coach select {
 +            background: #444;
 +            color: #fff;
 +            border-color: #777;
 +            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 +        }
- 
-         #darkModeToggle, #audioToggle {
-             position: fixed;
-             top: 10px;
-             padding: 6px 12px;
-             border-radius: 15px;
-             font-size: 12px;
-             z-index: 101;
-         }
-         #darkModeToggle { right: 10px; }
-         #audioToggle { right: 80px; }
-         #chatBubble {
-             position: fixed;
-             width: 50px;
-             height: 50px;
-             background-color: #ff4f81;
-             border-radius: 25px;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             cursor: pointer;
-             z-index: 200;
-             color: #fff;
-             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-             -webkit-tap-highlight-color: transparent;
-@@ -792,54 +951,68 @@
-             .expiry { font-size: 14px; }
-             .qr-code { width: 100px; top: 60px; }
-             .back-content { margin-top: 70px; font-size: 14px; }
-             .back-header { font-size: 18px; }
-             .btn, select, input[type="number"], input[type="text"] {
-                 padding: 6px 12px;
-                 font-size: 12px;
-             }
-             select, input[type="number"], input[type="text"] { width: 120px; }
-             .history { max-height: 100px; font-size: 13px; }
-             #darkModeToggle, #audioToggle { font-size: 10px; padding: 5px 10px; }
-             #audioToggle { right: 60px; }
-             .collapsible { width: 95%; padding: 5px; }
-             #diaryEntry { height: 80px; }
-             #diaryList { max-height: 150px; }
-             #chatBubble { width: 40px; height: 40px; }
-             #chatBubble::after { font-size: 20px; }
-             .chat-container { width: 280px; max-height: 350px; }
-             #chatMessages { max-height: 250px; }
-             #chatInput { min-width: 120px; }
-             #chatInputArea button { padding: 3px 8px; min-width: 35px; }
-             #playlist { max-height: 120px; }
-         }
-     </style>
- </head>
--<body>
--    <div id="loadingScreen">
--        <div class="spinner"></div>
--    </div>
++        .dark-mode #honorCoachOutput {
++            background: rgba(0, 0, 0, 0.4);
++            border-color: rgba(64, 224, 208, 0.5);
++        }
++ 
++         #darkModeToggle, #audioToggle {
++             position: fixed;
++             top: 10px;
++             padding: 6px 12px;
++             border-radius: 15px;
++             font-size: 12px;
++             z-index: 101;
++         }
++         #darkModeToggle { right: 10px; }
++         #audioToggle { right: 80px; }
++         #chatBubble {
++             position: fixed;
++             width: 50px;
++             height: 50px;
++             background-color: #ff4f81;
++             border-radius: 25px;
++             display: flex;
++             align-items: center;
++             justify-content: center;
++             cursor: pointer;
++             z-index: 200;
++             color: #fff;
++             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
++             -webkit-tap-highlight-color: transparent;
++             .expiry { font-size: 14px; }
++             .qr-code { width: 100px; top: 60px; }
++             .back-content { margin-top: 70px; font-size: 14px; }
++             .back-header { font-size: 18px; }
++             .btn, select, input[type="number"], input[type="text"] {
++                 padding: 6px 12px;
++                 font-size: 12px;
++             }
++             select, input[type="number"], input[type="text"] { width: 120px; }
++             .history { max-height: 100px; font-size: 13px; }
++             #darkModeToggle, #audioToggle { font-size: 10px; padding: 5px 10px; }
++             #audioToggle { right: 60px; }
++             .collapsible { width: 95%; padding: 5px; }
++             #diaryEntry { height: 80px; }
++             #diaryList { max-height: 150px; }
++             #chatBubble { width: 40px; height: 40px; }
++             #chatBubble::after { font-size: 20px; }
++             .chat-container { width: 280px; max-height: 350px; }
++             #chatMessages { max-height: 250px; }
++             #chatInput { min-width: 120px; }
++             #chatInputArea button { padding: 3px 8px; min-width: 35px; }
++             #playlist { max-height: 120px; }
++         }
++     </style>
++ </head>
 +<body>
 +    <a class="open-website-link" href="https://vip-membership-b19fe.web.app/" target="_blank" rel="noopener">
 +        🚀 打开网站 (vip-membership-b19fe.web.app)
@@ -386,66 +1179,56 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +    <div id="loadingScreen">
 +        <div class="spinner"></div>
 +    </div>
-     <button id="darkModeToggle" class="btn" onclick="toggleDarkMode()">切换黑暗模式</button>
-     <button id="audioToggle" class="btn" onclick="toggleAudio()">音乐开关</button>
-     <audio id="backgroundMusic" loop>
-         <source src="https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" type="audio/mpeg">
-         Your browser does not support the audio element.
-     </audio>
-     <div class="card-container" onclick="flipCard()">
-         <div class="card front">
-             <div class="bank-name">心动银行</div>
-             <img class="logo" loading="lazy" src="https://i.imgur.com/OleuXpc.jpeg" alt="Logo">
-             <img class="chip" loading="lazy" src="https://i.imgur.com/I836XHp.png" alt="Chip">
-             <div class="card-details">
-                 <p class="card-number">5201 8888 1314 9999</p>
-                 <p class="expiry">有效期至: <strong>12/2099</strong></p>
-                 <p class="card-holder"><strong>冯钰茜</strong></p>
-             </div>
-         </div>
-         <div class="card back">
-             <img class="magnetic-stripe" loading="lazy" src="https://i.imgur.com/8ZLLYBn.jpeg" alt="Magnetic Stripe">
-             <img class="qr-code" loading="lazy" src="https://i.imgur.com/3ojYXPE.png" alt="QR Code">
-             <div class="back-content">
-                 <div class="back-header">心动银行 黑金卡</div>
-                 <p>专属权益与服务<br>终身有效<br>全球无忧服务<br>联系客服：85000272</p>
-             </div>
-         </div>
-@@ -859,101 +1032,193 @@
-                 <input type="number" id="newRewardCost" min="1" placeholder="积分">
-                 <button class="btn" onclick="addReward()">添加奖励</button>
-             </div>
-             <div class="history">
-                 <h3>交易记录</h3>
-                 <ul id="historyList"></ul>
-                 <button class="btn" onclick="clearTransactionHistory()">清空交易记录</button>
-             </div>
-         </div>
-     </div>
- 
-     <div class="collapsible">
-         <h2 onclick="toggleSection(this)">我的日记</h2>
-         <div class="content">
-             <textarea id="diaryEntry" placeholder="记录今天的想法..."></textarea>
-             <select id="diaryMood">
-                 <option value="happy">😊 开心</option>
-                 <option value="sad">😢 难过</option>
-                 <option value="neutral">😐 平常</option>
-             </select>
-             <button class="btn" onclick="saveDiaryEntry()">保存</button>
-             <div id="diaryList"></div>
-         </div>
-     </div>
- 
--    <div class="collapsible">
--        <h2 onclick="toggleSection(this)">我的歌单</h2>
--        <div class="content">
--            <div id="playlist"></div>
--        </div>
--    </div>
--
--    <div id="chatBubble"></div>
--    <div class="chat-container" id="chatContainer">
++     <button id="darkModeToggle" class="btn" onclick="toggleDarkMode()">切换黑暗模式</button>
++     <button id="audioToggle" class="btn" onclick="toggleAudio()">音乐开关</button>
++     <audio id="backgroundMusic" loop>
++         <source src="https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" type="audio/mpeg">
++         Your browser does not support the audio element.
++     </audio>
++     <div class="card-container" onclick="flipCard()">
++         <div class="card front">
++             <div class="bank-name">心动银行</div>
++             <img class="logo" loading="lazy" src="https://i.imgur.com/OleuXpc.jpeg" alt="Logo">
++             <img class="chip" loading="lazy" src="https://i.imgur.com/I836XHp.png" alt="Chip">
++             <div class="card-details">
++                 <p class="card-number">5201 8888 1314 9999</p>
++                 <p class="expiry">有效期至: <strong>12/2099</strong></p>
++                 <p class="card-holder"><strong>冯钰茜</strong></p>
++             </div>
++         </div>
++         <div class="card back">
++             <img class="magnetic-stripe" loading="lazy" src="https://i.imgur.com/8ZLLYBn.jpeg" alt="Magnetic Stripe">
++             <img class="qr-code" loading="lazy" src="https://i.imgur.com/3ojYXPE.png" alt="QR Code">
++             <div class="back-content">
++                 <div class="back-header">心动银行 黑金卡</div>
++                 <p>专属权益与服务<br>终身有效<br>全球无忧服务<br>联系客服：85000272</p>
++             </div>
++         </div>
++                 <input type="number" id="newRewardCost" min="1" placeholder="积分">
++                 <button class="btn" onclick="addReward()">添加奖励</button>
++             </div>
++             <div class="history">
++                 <h3>交易记录</h3>
++                 <ul id="historyList"></ul>
++                 <button class="btn" onclick="clearTransactionHistory()">清空交易记录</button>
++             </div>
++         </div>
++     </div>
++ 
++     <div class="collapsible">
++         <h2 onclick="toggleSection(this)">我的日记</h2>
++         <div class="content">
++             <textarea id="diaryEntry" placeholder="记录今天的想法..."></textarea>
++             <select id="diaryMood">
++                 <option value="happy">😊 开心</option>
++                 <option value="sad">😢 难过</option>
++                 <option value="neutral">😐 平常</option>
++             </select>
++             <button class="btn" onclick="saveDiaryEntry()">保存</button>
++             <div id="diaryList"></div>
++         </div>
++     </div>
++ 
 +    <div class="collapsible">
 +        <h2 onclick="toggleSection(this)">我的歌单</h2>
 +        <div class="content">
@@ -506,50 +1289,87 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +        </div>
 +    </div>
 +
++    <div class="collapsible">
++        <h2 onclick="toggleSection(this)">王者荣耀 AI 教练</h2>
++        <div class="content honor-coach">
++            <p>输入英雄、分路和你想强调的打法，这位随身教练会立刻给出装备顺序、铭文/符文以及实战节奏建议，帮助你在《王者荣耀》中更快上星。</p>
++            <div class="honor-coach-grid">
++                <label>英雄
++                    <select id="honorHero">
++                        <option value="露娜">露娜</option>
++                        <option value="李白">李白</option>
++                        <option value="狄仁杰">狄仁杰</option>
++                        <option value="澜">澜</option>
++                        <option value="王昭君">王昭君</option>
++                    </select>
++                </label>
++                <label>分路/定位
++                    <select id="honorLane">
++                        <option value="打野">打野</option>
++                        <option value="对抗路">对抗路</option>
++                        <option value="中路">中路</option>
++                        <option value="发育路">发育路</option>
++                        <option value="游走">游走</option>
++                    </select>
++                </label>
++                <label>打法倾向
++                    <select id="honorStyle">
++                        <option value="稳健运营">稳健运营</option>
++                        <option value="极限进攻">极限进攻</option>
++                        <option value="反蹲反打">反蹲反打</option>
++                        <option value="带线牵制">带线牵制</option>
++                    </select>
++                </label>
++            </div>
++            <label>个人补充（擅长连招、想练的细节）
++                <input type="text" id="honorFocus" placeholder="例如：擅长小规模绕后、想练极限控制"> 
++            </label>
++            <label>敌方阵容/需要针对的人
++                <textarea id="honorEnemy" placeholder="例如：敌方有盾山+鲁班，需要打后排"></textarea>
++            </label>
++            <button class="btn" onclick="generateHonorGuide()">生成王者出装 & 铭文建议</button>
++            <div id="honorCoachOutput" aria-live="polite"></div>
++            <small>提示：建议会结合版本常见思路，你也可以把生成的文字复制到队友/朋友那里，方便交流战术。</small>
++        </div>
++    </div>
++
 +    <div id="chatBubble"></div>
 +    <div class="chat-container" id="chatContainer">
-         <div id="chatHeader">客服聊天 (拖动移动，点击收起)</div>
-         <div id="typingIndicator"></div>
-         <div id="chatMessages"></div>
-         <div id="chatInputArea">
-             <input type="text" id="chatInput" placeholder="输入消息...">
-             <button class="btn" onclick="sendMessage()">发送</button>
-             <button class="btn" id="voiceButton" onclick="startVoiceInput()">🎤</button>
-             <button class="btn" onclick="clearChat()">🧹</button>
-         </div>
-     </div>
- 
-     <div id="spinner" class="spinner"></div>
-     <footer>© 2025 心动银行 - 由 饶坚良 精心设计</footer>
- 
-     <script type="module">
-         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, deleteDoc, getDocs, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
- 
-         const firebaseConfig = {
-             apiKey: "AIzaSyACDbq6EXRSNiNd8dGiPiTrt4mjpu5ri3w",
-             authDomain: "vip-membership-b19fe.firebaseapp.com",
-             projectId: "vip-membership-b19fe",
-             storageBucket: "vip-membership-b19fe.appspot.com",
-             messagingSenderId: "1098738124176",
-             appId: "1:1098738124176:web:77ec1c338f627026729f15"
-         };
- 
-         const app = initializeApp(firebaseConfig);
-         const db = getFirestore(app);
-         const userRef = doc(db, "users", "vip-user");
-         const transactionsRef = collection(userRef, "transactions");
-         const rewardsRef = collection(userRef, "rewards");
-         const chatsRef = collection(userRef, "chats");
-         const diaryRef = collection(userRef, "diary");
- 
--        let currentSender = "liang";
--        let recorder = null;
--        let isRecording = false;
--        let currentAudio = null;
--
--        async function loadPoints() {
--            const spinner = document.getElementById("spinner");
++         <div id="chatHeader">客服聊天 (拖动移动，点击收起)</div>
++         <div id="typingIndicator"></div>
++         <div id="chatMessages"></div>
++         <div id="chatInputArea">
++             <input type="text" id="chatInput" placeholder="输入消息...">
++             <button class="btn" onclick="sendMessage()">发送</button>
++             <button class="btn" id="voiceButton" onclick="startVoiceInput()">🎤</button>
++             <button class="btn" onclick="clearChat()">🧹</button>
++         </div>
++     </div>
++ 
++     <div id="spinner" class="spinner"></div>
++     <footer>© 2025 心动银行 - 由 饶坚良 精心设计</footer>
++ 
++     <script type="module">
++         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
++         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, deleteDoc, getDocs, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
++ 
++         const firebaseConfig = {
++             apiKey: "AIzaSyACDbq6EXRSNiNd8dGiPiTrt4mjpu5ri3w",
++             authDomain: "vip-membership-b19fe.firebaseapp.com",
++             projectId: "vip-membership-b19fe",
++             storageBucket: "vip-membership-b19fe.appspot.com",
++             messagingSenderId: "1098738124176",
++             appId: "1:1098738124176:web:77ec1c338f627026729f15"
++         };
++ 
++         const app = initializeApp(firebaseConfig);
++         const db = getFirestore(app);
++         const userRef = doc(db, "users", "vip-user");
++         const transactionsRef = collection(userRef, "transactions");
++         const rewardsRef = collection(userRef, "rewards");
++         const chatsRef = collection(userRef, "chats");
++         const diaryRef = collection(userRef, "diary");
++ 
 +        let currentSender = "liang";
 +        let recorder = null;
 +        let isRecording = false;
@@ -596,61 +1416,56 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +
 +        async function loadPoints() {
 +            const spinner = document.getElementById("spinner");
-             spinner.style.display = "block";
-             try {
-                 const docSnap = await getDoc(userRef);
-                 if (docSnap.exists()) {
-                     const data = docSnap.data();
-                     updatePointsDisplay(data.points || 0);
-                     updateStreakDisplay(data.streak || 0, data.lastCheckIn);
-                 } else {
-                     await setDoc(userRef, { points: 0, streak: 0, lastCheckIn: null });
-                     updatePointsDisplay(0);
-                     updateStreakDisplay(0, null);
-                 }
-                 loadHistory();
-                 loadRewards();
-                 startCountdown();
-                 loadPlaylist();
-             } catch (error) {
-                 console.error("加载积分失败:", error);
-             }
-             spinner.style.display = "none";
-         }
- 
-         async function adjustPoints() {
-             const spinner = document.getElementById("spinner");
-             spinner.style.display = "block";
-@@ -1477,54 +1742,127 @@
-             const playlist = document.getElementById("playlist");
-             const songs = [
-                 { name: "Flower Dance", url: "https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" },
-                 { name: "Need You Now", url: "https://www.dropbox.com/scl/fi/l08rq49ao7y8siv5vwa02/Lady-Antebellum-Need-You-Now.mp3?rlkey=1y7sbd3druy1g0mrafuwz1xof&st=d3f7r56a&raw=1" },
-                 { name: "Close to You", url: "https://www.dropbox.com/scl/fi/wy4v3cn11uwseh14hyb9a/Carpenters_They_Long_To_Be_Close_To_You.mp3?rlkey=oxh880tv5shrp6jygagxvw3t3&st=ocdxuzwc&raw=1" }
-             ];
- 
-             playlist.innerHTML = "";
-             songs.forEach((song, index) => {
-                 const div = document.createElement("div");
-                 const audio = document.createElement("audio");
-                 audio.controls = true;
-                 audio.src = song.url;
-                 audio.addEventListener("play", () => {
-                     if (currentAudio && currentAudio !== audio) {
-                         currentAudio.pause();
-                     }
-                     currentAudio = audio;
-                 });
-                 div.textContent = `${index + 1}. ${song.name} `;
-                 div.appendChild(audio);
-                 playlist.appendChild(div);
-             });
-         }
- 
--        function toggleSection(header) {
--            const content = header.nextElementSibling;
--            content.classList.toggle("active");
--        }
++             spinner.style.display = "block";
++             try {
++                 const docSnap = await getDoc(userRef);
++                 if (docSnap.exists()) {
++                     const data = docSnap.data();
++                     updatePointsDisplay(data.points || 0);
++                     updateStreakDisplay(data.streak || 0, data.lastCheckIn);
++                 } else {
++                     await setDoc(userRef, { points: 0, streak: 0, lastCheckIn: null });
++                     updatePointsDisplay(0);
++                     updateStreakDisplay(0, null);
++                 }
++                 loadHistory();
++                 loadRewards();
++                 startCountdown();
++                 loadPlaylist();
++             } catch (error) {
++                 console.error("加载积分失败:", error);
++             }
++             spinner.style.display = "none";
++         }
++ 
++         async function adjustPoints() {
++             const spinner = document.getElementById("spinner");
++             spinner.style.display = "block";
++             const playlist = document.getElementById("playlist");
++             const songs = [
++                 { name: "Flower Dance", url: "https://www.dropbox.com/scl/fi/yiry4syd84w5uesrdehg4/SOUNDZ-under-GROUND-DJ-Okawari-Tabeyellow-Flower-Dance.mp3?rlkey=n00uozba5xd3po4iyiiogcfd7&st=d9gon05a&raw=1" },
++                 { name: "Need You Now", url: "https://www.dropbox.com/scl/fi/l08rq49ao7y8siv5vwa02/Lady-Antebellum-Need-You-Now.mp3?rlkey=1y7sbd3druy1g0mrafuwz1xof&st=d3f7r56a&raw=1" },
++                 { name: "Close to You", url: "https://www.dropbox.com/scl/fi/wy4v3cn11uwseh14hyb9a/Carpenters_They_Long_To_Be_Close_To_You.mp3?rlkey=oxh880tv5shrp6jygagxvw3t3&st=ocdxuzwc&raw=1" }
++             ];
++ 
++             playlist.innerHTML = "";
++             songs.forEach((song, index) => {
++                 const div = document.createElement("div");
++                 const audio = document.createElement("audio");
++                 audio.controls = true;
++                 audio.src = song.url;
++                 audio.addEventListener("play", () => {
++                     if (currentAudio && currentAudio !== audio) {
++                         currentAudio.pause();
++                     }
++                     currentAudio = audio;
++                 });
++                 div.textContent = `${index + 1}. ${song.name} `;
++                 div.appendChild(audio);
++                 playlist.appendChild(div);
++             });
++         }
++ 
 +        function toggleSection(header) {
 +            const content = header.nextElementSibling;
 +            content.classList.toggle("active");
@@ -728,68 +1543,213 @@ index b59b7dad463b04d0c5eff116c5c20f67145a0068..195d57679a6f264c685b846713f5435b
 +            replyBox.value = message.trim();
 +            spinner.style.display = "none";
 +        }
- 
-         document.addEventListener("DOMContentLoaded", () => {
-             const chatBubble = document.getElementById("chatBubble");
-             const chatContainer = document.getElementById("chatContainer");
-             currentX = window.innerWidth - 70;
-             currentY = window.innerHeight - 70;
-             chatBubble.style.left = `${currentX}px`;
-             chatBubble.style.top = `${currentY}px`;
-             chatContainer.style.left = `${currentX}px`;
-             chatContainer.style.top = `${currentY + 60}px`;
- 
-             chatBubble.addEventListener("mousedown", startDragging);
-             chatContainer.addEventListener("mousedown", startDragging);
-             document.addEventListener("mousemove", drag);
-             document.addEventListener("mouseup", stopDragging);
-             chatBubble.addEventListener("touchstart", startDragging);
-             chatContainer.addEventListener("touchstart", startDragging);
-             document.addEventListener("touchmove", drag);
-             document.addEventListener("touchend", stopDragging);
-             chatBubble.addEventListener("click", (e) => { if (!isDragging) toggleChat(); });
- 
-             document.getElementById("audioToggle").textContent = "开启音乐";
-             if (localStorage.getItem("darkMode") === "true") {
-                 document.body.classList.add("dark-mode");
-                 addStars();
-@@ -1535,31 +1873,32 @@
- 
-             const loadingScreen = document.getElementById("loadingScreen");
-             setTimeout(() => {
-                 loadingScreen.classList.add("fade-out");
-                 setTimeout(() => loadingScreen.style.display = "none", 500);
-             }, 1000);
-         });
- 
-         document.getElementById("chatInput").addEventListener("keypress", (e) => {
-             if (e.key === "Enter") sendMessage();
-         });
- 
-         window.adjustPoints = adjustPoints;
-         window.redeemSpecificReward = redeemSpecificReward;
-         window.addReward = addReward;
-         window.deleteReward = deleteReward;
-         window.sendMessage = sendMessage;
-         window.clearChat = clearChat;
-         window.startVoiceInput = startVoiceInput;
-         window.toggleChat = toggleChat;
-         window.toggleDarkMode = toggleDarkMode;
-         window.flipCard = flipCard;
-         window.toggleAudio = toggleAudio;
-         window.clearTransactionHistory = clearTransactionHistory;
-         window.saveDiaryEntry = saveDiaryEntry;
--        window.deleteDiaryEntry = deleteDiaryEntry;
--        window.dailyCheckIn = dailyCheckIn;
--        window.toggleSection = toggleSection;
--    </script>
--</body>
--</html>
-\ No newline at end of file
++
++        const honorHeroGuides = {
++            "露娜": {
++                title: "月下无限连法刺",
++                variants: {
++                    "打野": {
++                        build: ["追击刀锋(贪婪之噬)", "抵抗之靴", "噬神之书", "极寒风暴", "博学者之怒", "贤者之书"],
++                        runes: { red: "梦魇*10", green: "怜悯*10", blue: "狩猎*10" },
++                        spell: "惩击",
++                        focus: "刷大招刷新被动，连段衔接不断蓝",
++                        combos: "12A-大招-1A-2A-刷新大招，尽量利用墙体标记",
++                        tips: ["前期多靠二技能穿墙抢视野，保证蓝区节奏", "团战切入前先蹭能量，利用极寒顶住首轮控制"]
++                    },
++                    "对抗路": {
++                        build: ["秘法之靴", "噬神之书", "痛苦面具", "极寒风暴", "博学者之怒", "辉月"],
++                        runes: { red: "梦魇*10", green: "心眼*10", blue: "狩猎*10" },
++                        spell: "闪现",
++                        focus: "赖线清兵，蹭大招切后",
++                        combos: "普攻叠印记→2技能进场→1技能打伤害→大招收割",
++                        tips: ["兵线进塔前提前插眼防止被抓", "有辉月时可以强切后排打极限1换多"]
++                    }
++                }
++            },
++            "李白": {
++                title: "灵活爆发刺客",
++                variants: {
++                    "打野": {
++                        build: ["贪婪之噬", "抵抗之靴", "暗影战斧", "宗师之力", "破军", "名刀·司命"],
++                        runes: { red: "祸源*10", green: "鹰眼*10", blue: "狩猎*10" },
++                        spell: "惩击",
++                        focus: "确保四下普攻释放大招",
++                        combos: "12A-大招-回拉二技能",
++                        tips: ["入侵时先刷好被动，等控制交过再进", "大招覆盖面大，利用草丛卡视野"]
++                    },
++                    "对抗路": {
++                        build: ["影忍之足", "暗影战斧", "无尽战刃", "宗师之力", "破军", "名刀·司命"],
++                        runes: { red: "无双*10", green: "鹰眼*10", blue: "狩猎*10" },
++                        spell: "闪现",
++                        focus: "利用位移拖延",
++                        combos: "1A-2穿墙-回拉-大招收",
++                        tips: ["兵线控在塔前骗技能", "有闪现时可反向大招封走位"]
++                    }
++                }
++            },
++            "狄仁杰": {
++                title: "发育路全能射手",
++                variants: {
++                    "发育路": {
++                        build: ["急速战靴", "末世", "纯净苍穹", "逐日之弓", "破晓", "无尽战刃"],
++                        runes: { red: "无双*10", green: "鹰眼*10", blue: "狩猎*10" },
++                        spell: "净化",
++                        focus: "双标记打短换",
++                        combos: "红标定身→黄标拉扯→普攻输出",
++                        tips: ["随时留黄牌保命，净化配合二技能解控", "逐日+纯净让你在团战站得更远"]
++                    }
++                }
++            },
++            "澜": {
++                title: "暗影潜行打野",
++                variants: {
++                    "打野": {
++                        build: ["巨人之握", "抵抗之靴", "暗影战斧", "宗师之力", "碎星锤", "破军"],
++                        runes: { red: "异变*10", green: "鹰眼*10", blue: "狩猎*10" },
++                        spell: "惩击",
++                        focus: "河道疾跑游走",
++                        combos: "水形态1→普攻→2→大招回身",
++                        tips: ["河道水体就是你的高速公路，盯紧先手机会", "大招后的免伤很高，可以硬吃第一波爆发"]
++                    }
++                }
++            },
++            "王昭君": {
++                title: "团控爆发法师",
++                variants: {
++                    "中路": {
++                        build: ["冷静之靴", "回响之杖", "痛苦面具", "博学者之怒", "辉月", "虚无法杖"],
++                        runes: { red: "梦魇*10", green: "献祭*10", blue: "调和*10" },
++                        spell: "闪现",
++                        focus: "大招控龙坑",
++                        combos: "2技能减速→1技能冰冻→大招覆盖",
++                        tips: ["先手二技能命中率=团战胜率，尽量贴墙放", "大招覆盖野区窄口，逼迫对面让资源"]
++                    }
++                }
++            }
++        };
++
++        const honorFallback = {
++            build: ["冷静之靴", "博学者之怒", "贤者之书", "辉月", "虚无法杖", "痛苦面具"],
++            runes: { red: "梦魇*10", green: "心眼*10", blue: "狩猎*10" },
++            spell: "根据分路自选", 
++            focus: "保持经济领先",
++            combos: "利用技能衔接打出控制",
++            tips: ["多看小地图，确保视野", "根据局势调整第三件装备"]
++        };
++
++        const honorStyleNotes = {
++            "稳健运营": "先守住发育曲线，等两件核心装后再接团，重视兵线资源。",
++            "极限进攻": "视野确认后先手，打完技能立即利用位移或闪现拉开。",
++            "反蹲反打": "把技能留到对面开团之后，反打时优先处理无位移C位。",
++            "带线牵制": "提前插眼，逼出对面控制后用位移撤走，创造人数差。"
++        };
++
++        function formatRunes(runes) {
++            return Object.entries(runes)
++                .map(([color, text]) => `${color}：${text}`)
++                .join(" ｜ ");
++        }
++
++        function generateHonorGuide() {
++            const spinner = document.getElementById("spinner");
++            spinner.style.display = "block";
++
++            const hero = document.getElementById("honorHero").value;
++            const lane = document.getElementById("honorLane").value;
++            const style = document.getElementById("honorStyle").value;
++            const focus = document.getElementById("honorFocus").value.trim();
++            const enemy = document.getElementById("honorEnemy").value.trim();
++
++            const heroInfo = honorHeroGuides[hero];
++            const variant = heroInfo?.variants?.[lane] || heroInfo?.variants?.["打野"] || honorFallback;
++            const tips = [...(variant.tips || [] )];
++
++            if (enemy) {
++                tips.push(`针对 ${enemy}：优先保留关键控制/位移，必要时做出不死鸟、魔女等防具来对冲伤害。`);
++            }
++            if (focus) {
++                tips.push(`个人打法：${focus}，建议在训练营多练，确保与队友沟通你的节奏。`);
++            }
++            tips.push(honorStyleNotes[style]);
++
++            const heroTitle = heroInfo?.title ? `${hero}｜${heroInfo.title}` : hero;
++            const build = (variant.build || honorFallback.build).join(" → ");
++            const runeText = formatRunes(variant.runes || honorFallback.runes);
++            const spell = variant.spell || honorFallback.spell;
++            const combo = variant.combos || honorFallback.combos;
++            const focusLine = variant.focus || honorFallback.focus;
++
++            const html = `
++                <h3>${heroTitle}</h3>
++                <p><strong>推荐分路：</strong>${lane} ｜ <strong>打法倾向：</strong>${style}</p>
++                <p><strong>出装顺序：</strong>${build}</p>
++                <p><strong>铭文/符文：</strong>${runeText}</p>
++                <p><strong>召唤师技能：</strong>${spell}</p>
++                <p><strong>连招节奏：</strong>${combo}</p>
++                <p><strong>核心思路：</strong>${focusLine}</p>
++                <p><strong>细节提示：</strong></p>
++                <ul>${tips.map(item => `<li>${item}</li>`).join("")}</ul>
++            `;
++
++            const output = document.getElementById("honorCoachOutput");
++            output.innerHTML = html;
++            spinner.style.display = "none";
++        }
++ 
++         document.addEventListener("DOMContentLoaded", () => {
++             const chatBubble = document.getElementById("chatBubble");
++             const chatContainer = document.getElementById("chatContainer");
++             currentX = window.innerWidth - 70;
++             currentY = window.innerHeight - 70;
++             chatBubble.style.left = `${currentX}px`;
++             chatBubble.style.top = `${currentY}px`;
++             chatContainer.style.left = `${currentX}px`;
++             chatContainer.style.top = `${currentY + 60}px`;
++ 
++             chatBubble.addEventListener("mousedown", startDragging);
++             chatContainer.addEventListener("mousedown", startDragging);
++             document.addEventListener("mousemove", drag);
++             document.addEventListener("mouseup", stopDragging);
++             chatBubble.addEventListener("touchstart", startDragging);
++             chatContainer.addEventListener("touchstart", startDragging);
++             document.addEventListener("touchmove", drag);
++             document.addEventListener("touchend", stopDragging);
++             chatBubble.addEventListener("click", (e) => { if (!isDragging) toggleChat(); });
++ 
++             document.getElementById("audioToggle").textContent = "开启音乐";
++             if (localStorage.getItem("darkMode") === "true") {
++                 document.body.classList.add("dark-mode");
++                 addStars();
++ 
++             const loadingScreen = document.getElementById("loadingScreen");
++             setTimeout(() => {
++                 loadingScreen.classList.add("fade-out");
++                 setTimeout(() => loadingScreen.style.display = "none", 500);
++             }, 1000);
++         });
++ 
++         document.getElementById("chatInput").addEventListener("keypress", (e) => {
++             if (e.key === "Enter") sendMessage();
++         });
++ 
++         window.adjustPoints = adjustPoints;
++         window.redeemSpecificReward = redeemSpecificReward;
++         window.addReward = addReward;
++         window.deleteReward = deleteReward;
++         window.sendMessage = sendMessage;
++         window.clearChat = clearChat;
++         window.startVoiceInput = startVoiceInput;
++         window.toggleChat = toggleChat;
++         window.toggleDarkMode = toggleDarkMode;
++         window.flipCard = flipCard;
++         window.toggleAudio = toggleAudio;
++         window.clearTransactionHistory = clearTransactionHistory;
++        window.saveDiaryEntry = saveDiaryEntry;
 +        window.deleteDiaryEntry = deleteDiaryEntry;
 +        window.dailyCheckIn = dailyCheckIn;
 +        window.toggleSection = toggleSection;
 +        window.generateJobReply = generateJobReply;
++        window.generateHonorGuide = generateHonorGuide;
 +    </script>
 +</body>
 +</html>
